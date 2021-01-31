@@ -1,12 +1,37 @@
 import express, {Request, Response} from 'express';
-const app = express();
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+import router from './src/routes'
+import 'module-alias/register';
+ 
 
+const app = express();
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "LogRocket Express API with Swagger",
+      version: "0.1.0",
+      description:
+        "This is a simple CRUD API application made with Express and documented with Swagger",
+      license: {
+        name: "MIT",
+        url: "https://spdx.org/licenses/MIT.html",
+      }
+    },
+  },
+  apis: ["./src/routes/*.route/*"],
+};
+
+const specs = swaggerJsdoc(options);
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs)
+);
+app.use(router)
 app.get('/', (req: Request, res: Response) => {
   res.send('hi');
 });
 
-const PORT: number = 8001;
-
-app.listen(PORT, ()=>{
-  console.log('listening on 81');
-});
+export default app

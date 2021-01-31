@@ -12,8 +12,13 @@
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "eslint-plugin-jsdoc"
     ],
     "rules": {
+        "new-cap": "off"
+    },
+    "options": {
+        "indent": ["error", 4]
     }
 }
