@@ -27,12 +27,24 @@ describe('shoes route', ()=>{
 
     it('should return error msg missing items', async(done)=>{
         await request(app)
-        .get('/shoes?page=5')
+        .get('/shoes/?page=5')
         .then((result) => {
             expect(result.text).toEqual("missing param items")
+            done()
         }).catch(e =>{
-            throw e
+            throw e;
         })
-        done()
+        
+    }),
+    it('it should return code 100', async(done)=>{
+        await request(app)
+        .get('/shoes/detail/5')
+        .then((result) => {
+            expect(result.status).toEqual(200)
+            done()
+        }).catch(e =>{
+            throw e;
+        })
+        
     })
 })

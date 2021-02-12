@@ -1,7 +1,7 @@
 import express, {Router} from 'express';
-import {Pool} from 'pg';
+import {Pool, QueryResult} from 'pg';
 import IShoes from '../../interfaces/IShoes';
-import ShoesController from '../../controller/shoes.controller'
+import ShoesController, { IShoesDetail } from '../../controller/shoes.controller'
 const getShoesRoutes:(router:Router, dbPool: Pool)=>Router =
 (router, dbPool) =>{
   /**
@@ -27,13 +27,13 @@ const getShoesRoutes:(router:Router, dbPool: Pool)=>Router =
   *       200:
   *         description: test
   */
-    interface test{
+    interface IGetShoesQueryParams{
         items:number,
         page:number;
     }
     router.get('/',
         (
-            req: express.Request<null, null, null, test>,
+            req: express.Request<null, null, null, IGetShoesQueryParams>,
             res: express.Response<IShoes[]|string>,
         )=>{
             const {page, items} = req.query
@@ -56,6 +56,51 @@ const getShoesRoutes:(router:Router, dbPool: Pool)=>Router =
             })
            
         });
+
+   /**
+  * @swagger
+  * /shoes/detail/{shoesId}:
+  *   get:
+  *     summary: Retrieve details of a shoe
+  *     parameters:
+  *       - in: path
+  *         name: shoesId
+  *         schema:
+  *           type: integer
+  *           required: true
+  *           description: Numeric ID of the shoe
+  *     responses:
+  *       200:
+  *         description: test
+  */
+interface IGetShoesDetailParams{
+    shoesId:number;
+}
+
+router.get('/detail/:shoesId',
+    (
+        req: express.Request<IGetShoesDetailParams, null, null>,
+        res: express.Response<IShoesDetail|string|Error>,
+    )=>{
+        const {shoesId} = req.params;
+        
+        if(!shoesId){
+            res.status(300).send('missing param page')
+            return
+        }
+
+        ShoesController.getShoesDetail(shoesId, dbPool).then((result)=>{
+        
+            if(!(result instanceof Error)
+            ){
+                res.status(200).send(result)
+            }else{
+                res.status(500).send(result?.message)
+            }
+        })
+       
+    });
+
 
     return router;
 };

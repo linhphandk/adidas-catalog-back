@@ -3,9 +3,12 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import router from './src/routes'
 import 'module-alias/register';
+import cors from 'cors';
  
 
 const app = express();
+app.use(cors())
+
 const options = {
   definition: {
     openapi: "3.0.0",
