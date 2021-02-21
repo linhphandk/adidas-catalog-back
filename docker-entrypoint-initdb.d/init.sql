@@ -22,6 +22,16 @@ CREATE TABLE Shoes_Image(
   is_default Boolean default FALSE,
   FOREIGN KEY(FK_Shoes) REFERENCES Shoes(Shoes_ID)
 );
+
+CREATE TABLE Reviews(
+  review_id SERIAL PRIMARY KEY,
+  user_name Varchar,
+  rating INTEGER,
+  comment Varchar,
+  FK_Shoes INTEGER,
+  FOREIGN KEY(FK_Shoes) REFERENCES Shoes(Shoes_ID)
+);
+
 INSERT INTO Shoes(URL,Product_Name,Product_ID,Listing_Price,Sale_Price,Discount,Brand,Description,Rating,Reviews,Images,Last_Visited) VALUES ('https://shop.adidas.co.in/#!product/AH2430_nmd_racerpkw','Women''s adidas Originals NMD_Racer Primeknit Shoes','AH2430',14999,7499,50,'ORIGINALS','Channeling the streamlined look of an ''80s racer, these shoes are updated with modern features. The foot-hugging adidas Primeknit upper offers a soft, breathable feel. The Boost midsole provides responsive comfort accented with a contrast-color EVA heel plug. Embroidered details add a distinctive finish.',0,0,'["https://content.adidas.co.in/static/Product-AH2430/WOMEN_Originals_SHOES_LOW_AH2430_1.jpg","https://content.adidas.co.in/static/Product-AH2430/WOMEN_Originals_SHOES_LOW_AH2430_2.jpg","https://content.adidas.co.in/static/Product-AH2430/WOMEN_Originals_SHOES_LOW_AH2430_3.jpg","https://content.adidas.co.in/static/Product-AH2430/WOMEN_Originals_SHOES_LOW_AH2430_4.jpg","https://content.adidas.co.in/static/Product-AH2430/WOMEN_Originals_SHOES_LOW_AH2430_5.jpg","https://content.adidas.co.in/static/Product-AH2430/WOMEN_Originals_SHOES_LOW_AH2430_6.jpg"]','2020-04-13T15:06:14');
 INSERT INTO Shoes(URL,Product_Name,Product_ID,Listing_Price,Sale_Price,Discount,Brand,Description,Rating,Reviews,Images,Last_Visited) VALUES ('https://shop.adidas.co.in/#!product/G27341_adidassleekw','Women''s adidas Originals Sleek Shoes','G27341',7599,3799,50,'ORIGINALS','A modern take on adidas sport heritage, tailored just for women. Perforated 3-Stripes on the leather upper of these shoes offer a sleek look that mirrors iconic tennis styles.',0,0,'["https://content.adidas.co.in/static/Product-G27341/WOMEN_Originals_SHOES_LOW_G27341_1.jpg","https://content.adidas.co.in/static/Product-G27341/WOMEN_Originals_SHOES_LOW_G27341_2.jpg","https://content.adidas.co.in/static/Product-G27341/WOMEN_Originals_SHOES_LOW_G27341_3.jpg","https://content.adidas.co.in/static/Product-G27341/WOMEN_Originals_SHOES_LOW_G27341_4.jpg","https://content.adidas.co.in/static/Product-G27341/WOMEN_Originals_SHOES_LOW_G27341_5.jpg","https://content.adidas.co.in/static/Product-G27341/WOMEN_Originals_SHOES_LOW_G27341_6.jpg"]','2020-04-13T15:06:15');
 INSERT INTO Shoes(URL,Product_Name,Product_ID,Listing_Price,Sale_Price,Discount,Brand,Description,Rating,Reviews,Images,Last_Visited) VALUES ('https://shop.adidas.co.in/#!product/CM0081_pukaws','Women''s adidas Swim Puka Slippers','CM0081',999,599,40,'CORE / NEO','These adidas Puka slippers for women''s come with slim straps for a great fit. Feature performance logo on the footbed and textured Rubber outsole that gives unique comfort.',0,0,'["https://content.adidas.co.in/static/Product-CM0081/Men_SWIM_SLIDES_CM0081_1.jpg","https://content.adidas.co.in/static/Product-CM0081/Men_SWIM_SLIDES_CM0081_2.jpg","https://content.adidas.co.in/static/Product-CM0081/Men_SWIM_SLIDES_CM0081_3.jpg","https://content.adidas.co.in/static/Product-CM0081/Men_SWIM_SLIDES_CM0081_4.jpg","https://content.adidas.co.in/static/Product-CM0081/Men_SWIM_SLIDES_CM0081_5.jpg","https://content.adidas.co.in/static/Product-CM0081/Men_SWIM_SLIDES_CM0081_6.jpg"]','2020-04-13T15:06:15');
@@ -720,7 +730,8 @@ INSERT INTO Shoes_Image(fk_shoes,image) VALUES (99,'https://content.adidas.co.in
 INSERT INTO Shoes_Image(fk_shoes,image) VALUES (99,'https://content.adidas.co.in/static/Product-CJ8118/Men_RUNNING_SHOES_LOW_CJ8118_4.jpg');
 INSERT INTO Shoes_Image(fk_shoes,image) VALUES (99,'https://content.adidas.co.in/static/Product-CJ8118/Men_RUNNING_SHOES_LOW_CJ8118_5.jpg');
 INSERT INTO Shoes_Image(fk_shoes,image) VALUES (99,'https://content.adidas.co.in/static/Product-CJ8118/Men_RUNNING_SHOES_LOW_CJ8118_6.jpg');
-
+INSERT INTO public.reviews(user_name, rating, comment, fk_shoes)
+	VALUES ( 'test_user', 3, 'test comment lorem ipsum', 1);
 
 Update shoes_image set is_default=true where shoes_image_id in(
   SELECT shoes_image_id FROM shoes_image

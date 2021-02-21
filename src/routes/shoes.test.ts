@@ -1,12 +1,12 @@
 import express from 'express';
 import request from 'supertest'
-import app from '../../../app';
+import app from '../../app';
 describe('shoes route', ()=>{
     it('should get 5 items', async(done)=>{
         await request(app)
         .get('/shoes?page=10&items=5')
         .then((result) => {
-            expect(result.body.length).toEqual(5)
+            expect(result.body.shoes.length).toEqual(5)
         }).catch(e =>{
             throw e
         })

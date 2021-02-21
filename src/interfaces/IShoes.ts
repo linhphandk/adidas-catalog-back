@@ -13,3 +13,22 @@ export default interface IShoes {
     Images:string,
     Last_Visited:string,
 };
+
+export interface IGetShoesResponse{
+    shoes: IShoes[],
+    count: number
+}
+
+export interface IGetShoesDetailParams {
+    shoesId: number;
+}
+
+export interface IShoesDetail {
+    shoesDetail: IShoes | Error,
+    images: string[][] | Error
+}
+
+export interface IGetShoesQueryParams {
+    items: number,
+    page: number;
+}

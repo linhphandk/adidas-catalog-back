@@ -1,7 +1,7 @@
 import express, {Router} from 'express';
 import {Pool, QueryResult} from 'pg';
-import IShoes from '../../interfaces/IShoes';
-import ShoesController, { IShoesDetail } from '../../controller/shoes.controller'
+import { IShoesDetail,IGetShoesResponse } from '../../interfaces/IShoes';
+import ShoesController from '../../controllers/shoes.controller'
 const getShoesRoutes:(router:Router, dbPool: Pool)=>Router =
 (router, dbPool) =>{
   /**
@@ -34,7 +34,7 @@ const getShoesRoutes:(router:Router, dbPool: Pool)=>Router =
     router.get('/',
         (
             req: express.Request<null, null, null, IGetShoesQueryParams>,
-            res: express.Response<IShoes[]|string>,
+            res: express.Response<IGetShoesResponse|string>,
         )=>{
             const {page, items} = req.query
             
@@ -48,7 +48,7 @@ const getShoesRoutes:(router:Router, dbPool: Pool)=>Router =
                 return
             }
             ShoesController.getShoesPage(page,items, dbPool).then((result)=>{
-                if(Array.isArray(result)){
+                if(!(result instanceof Error)){
                     res.status(200).send(result)
                 }else{
                     res.status(500).send(result?.message)
