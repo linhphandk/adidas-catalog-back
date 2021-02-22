@@ -18,7 +18,9 @@ export default class ShoesController {
       `SELECT shoes_id,url, product_name, shoes_image.image FROM shoes 
         full join shoes_image 
         on shoes.shoes_id = shoes_image.fk_shoes
-        Where shoes_image.is_default = true order by shoes_id LIMIT ` + items +' OFFSET ' + skipItems)
+        Where shoes_image.is_default = true order by shoes_id LIMIT $1 OFFSET $2`,
+        [items,skipItems]  
+      )
         .then((result): IShoes[] => {
           return result.rows;
         }).catch((e:Error)=>{
@@ -49,8 +51,9 @@ export default class ShoesController {
     let returnValue:IShoesDetail = {} as IShoesDetail
     returnValue.shoesDetail = await dbPool.query(`
       SELECT * from shoes
-      where shoes_id = ${shoesID}
-    `).then((result:QueryResult<IShoes>)=>{
+      where shoes_id = $1`,
+      [shoesID]
+    ).then((result: QueryResult<IShoes>) => {
       return result.rows[0]
     }).catch((e:Error) => e)
 
@@ -60,8 +63,9 @@ export default class ShoesController {
 
     returnValue.images = await dbPool.query(`
       SELECT * from shoes_image
-      where fk_shoes = ${shoesID}
-    `).then((result:QueryResult<string[]>)=>{
+      where fk_shoes = $1`,
+      [shoesID]
+    ).then((result:QueryResult<string[]>)=>{
       return result.rows
     }).catch((e:Error) => e)
 

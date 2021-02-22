@@ -4,7 +4,8 @@ import swaggerUi from 'swagger-ui-express';
 import router from './src/routes'
 import 'module-alias/register';
 import cors from 'cors';
-import bodyParser from 'body-parser'
+import bodyParser from 'body-parser';
+import helmet from 'helmet'
 
 const app = express();
 app.use(cors());
