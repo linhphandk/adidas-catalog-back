@@ -14,7 +14,7 @@ export default class ShoesController {
    */
   public static async getReviews(shoeId:number, dbPool:Pool):Promise<IReview[] | Error> {
     let listOfReviews = await dbPool.query(
-      `SELECT * FROM public.reviews where fk_shoes=1;`)
+      `SELECT * FROM public.reviews where fk_shoes=${shoeId} ORDER BY review_id DESC;`)
       .then((result): IReview[] => {
           return result.rows;
         }).catch((e:Error)=>{
