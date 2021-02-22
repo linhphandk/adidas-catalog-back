@@ -1,10 +1,14 @@
 export interface IReview { 
-  review_id: number,
   user_name: string,
   rating: number,
-  comment: string,
+  user_comment: string,
   fk_shoes: number,
+}
+
+export interface IReviewDB extends IReview{ 
+  review_id: number,
 }
 export interface IGetReviewParams { 
   shoesId: number,
 }
+

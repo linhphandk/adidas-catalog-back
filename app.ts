@@ -4,11 +4,11 @@ import swaggerUi from 'swagger-ui-express';
 import router from './src/routes'
 import 'module-alias/register';
 import cors from 'cors';
- 
+import bodyParser from 'body-parser'
 
 const app = express();
-app.use(cors())
-
+app.use(cors());
+app.use(bodyParser.json());
 const options = {
   definition: {
     openapi: "3.0.0",

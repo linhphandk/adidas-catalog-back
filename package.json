@@ -5,7 +5,7 @@
   "scripts": {
     "start": "ts-node-dev -r tsconfig-paths/register --respawn server.ts",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn server.ts",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest --detectOpenHandles"
   },
   "dependencies": {
     "cors": "^2.8.5",

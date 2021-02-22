@@ -1,5 +1,5 @@
 import { Pool, QueryResult } from 'pg';
-import { IReview } from '../interfaces/IReview';
+import { IReview, IReviewDB } from '../interfaces/IReview';
 /**
  * handles interaction with reviews table
  * @class
@@ -16,11 +16,29 @@ export default class ShoesController {
     let listOfReviews = await dbPool.query(
       `SELECT * FROM public.reviews where fk_shoes=1;`)
       .then((result): IReview[] => {
-          console.log(result.rows)
           return result.rows;
         }).catch((e:Error)=>{
           return e
         });
     return listOfReviews
+  }
+
+  public static async addReview(
+    user_name: string,
+    rating: number,
+    user_comment: string,
+    fk_shoes: number,
+    dbPool:Pool
+  ): Promise<IReviewDB | Error> {
+    let result = await dbPool.query(
+      `INSERT INTO reviews(user_name, rating, user_comment, fk_shoes)
+       VALUES ( '${user_name}', ${rating}, '${user_comment}', ${fk_shoes})
+       returning *`)
+      .then((result: QueryResult<IReviewDB>): IReviewDB => {
+        return result.rows[0];
+      }).catch((e: Error) => {
+        return e
+      });
+    return result
   }
 }

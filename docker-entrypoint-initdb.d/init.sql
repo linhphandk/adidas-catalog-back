@@ -23,11 +23,12 @@ CREATE TABLE Shoes_Image(
   FOREIGN KEY(FK_Shoes) REFERENCES Shoes(Shoes_ID)
 );
 
+DROP TABLE IF EXISTS Reviews;
 CREATE TABLE Reviews(
   review_id SERIAL PRIMARY KEY,
   user_name Varchar,
   rating INTEGER,
-  comment Varchar,
+  user_comment Varchar,
   FK_Shoes INTEGER,
   FOREIGN KEY(FK_Shoes) REFERENCES Shoes(Shoes_ID)
 );
@@ -730,7 +731,7 @@ INSERT INTO Shoes_Image(fk_shoes,image) VALUES (99,'https://content.adidas.co.in
 INSERT INTO Shoes_Image(fk_shoes,image) VALUES (99,'https://content.adidas.co.in/static/Product-CJ8118/Men_RUNNING_SHOES_LOW_CJ8118_4.jpg');
 INSERT INTO Shoes_Image(fk_shoes,image) VALUES (99,'https://content.adidas.co.in/static/Product-CJ8118/Men_RUNNING_SHOES_LOW_CJ8118_5.jpg');
 INSERT INTO Shoes_Image(fk_shoes,image) VALUES (99,'https://content.adidas.co.in/static/Product-CJ8118/Men_RUNNING_SHOES_LOW_CJ8118_6.jpg');
-INSERT INTO public.reviews(user_name, rating, comment, fk_shoes)
+INSERT INTO public.reviews(user_name, rating, user_comment, fk_shoes)
 	VALUES ( 'test_user', 3, 'test comment lorem ipsum', 1);
 
 Update shoes_image set is_default=true where shoes_image_id in(
